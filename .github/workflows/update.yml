@@ -1,0 +1,68 @@
+name: Update all
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+  merge_group:
+  pull_request:
+    branches: ["*"]
+    paths:
+      - .github/workflows/update-all.yml
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          diagnostic-endpoint: ""
+
+      - uses: cachix/cachix-action@v17
+        with:
+          name: wahoo-wahoo-man
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - run: |
+          mkdir -p ~/.config/nixpkgs
+          echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
+
+      - run: |
+          printf "${{ secrets.URL }}" > url.txt
+          printf "${{ secrets.HASH }}" > hash.txt
+
+      - name: Update package
+        id: update-package
+        run: |
+          cachix watch-exec -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --commit --build
+
+      - run: |
+          rm hash.txt
+          rm url.txt
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: update_sm64ex-ap
+          delete-branch: true
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit-message: "pkgs: update sm64ex-ap"
+          title: "pkgs: update sm64ex-ap"
+          labels: "github_actions, update"
+          body: |
+            Automated update of sm64ex-ap"
