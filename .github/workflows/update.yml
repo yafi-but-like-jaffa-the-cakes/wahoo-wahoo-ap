@@ -61,6 +61,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           branch: update_sm64ex-ap
           delete-branch: true
           committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
