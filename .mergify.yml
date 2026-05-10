@@ -1,0 +1,16 @@
+pull_request_rules:
+  - name: Auto-merge for dependency bump pull requests
+    conditions:
+      - or:
+          - author=dependabot[bot]
+          - author=github-actions[bot]
+          - author=yafi-but-like-jaffa-the-cakes
+      - or:
+          - label=dependencies
+          - label=update
+      - check-success=Build
+      - check-success=Format
+      - check-success=Flake Check
+    actions:
+      merge:
+        method: merge
