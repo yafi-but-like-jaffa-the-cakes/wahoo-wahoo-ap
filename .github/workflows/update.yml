@@ -47,7 +47,7 @@ jobs:
       - name: Update package
         id: update-package
         run: |
-          cachix watch-exec wahoo-wahoo-man -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --commit --build
+          cachix watch-exec wahoo-wahoo-man -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --version=branch --commit --build
 
       - run: |
           rm hash.txt
