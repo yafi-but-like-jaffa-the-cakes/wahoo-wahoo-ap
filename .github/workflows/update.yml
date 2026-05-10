@@ -49,6 +49,7 @@ jobs:
       - name: Update package
         id: update-package
         run: |
+          set -euxo pipefail
           cachix watch-exec wahoo-wahoo-man -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --version=branch --commit --build
 
       - run: |
