@@ -1,4 +1,4 @@
-name: Update all
+name: Update package
 on:
   schedule:
     - cron: "0 16 * * *"
