@@ -63,3 +63,9 @@ jobs:
           labels: "github_actions, update"
           body: |
             Automated update of sm64ex-ap"
+
+      - uses: benc-uk/workflow-dispatch@v1
+        if: ${{ contains(fromJSON('["created", "updated"]'), steps.cpr.outputs.pull-request-operation) }}
+        with:
+          workflow: build.yml
+          ref: refs/heads/update_sm64ex-ap
