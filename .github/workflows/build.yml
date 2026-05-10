@@ -1,4 +1,4 @@
-name: Update package
+name: build
 on:
   workflow_dispatch:
   merge_group:
