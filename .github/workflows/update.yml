@@ -55,6 +55,7 @@ jobs:
       - run: |
           rm hash.txt
           rm url.txt
+          git rm *.txt
 
       - name: Create Pull Request
         id: cpr
