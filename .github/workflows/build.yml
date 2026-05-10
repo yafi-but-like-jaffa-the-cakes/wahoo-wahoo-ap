@@ -11,8 +11,8 @@ on:
       - main
 
 jobs:
-  update:
-    name: Update
+  build:
+    name: build
     runs-on: ubuntu-latest
     continue-on-error: true
     permissions:
@@ -36,8 +36,8 @@ jobs:
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
-      - name: Update package
-        id: update-package
+      - name: build-package
+        id: build-package
         run: |
           set -euxo pipefail
           nix build .#sm64ex-ap -L --no-link --print-out-paths | cachix push wahoo-wahoo-man
