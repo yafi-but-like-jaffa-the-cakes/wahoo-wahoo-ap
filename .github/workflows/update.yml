@@ -1,9 +1,12 @@
 name: Update package
 on:
   schedule:
-    - cron: "0 16 * * *"
+    - cron: "0 16 * * 1"
   workflow_dispatch:
   merge_group:
+  push:
+    paths:
+      - flake.lock
   pull_request:
     branches: ["*"]
     paths:
@@ -40,22 +43,11 @@ jobs:
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
-      - run: |
-          echo -n "${{ secrets.URL }}" > url.txt
-          echo -n "${{ secrets.HASH }}" > hash.txt
-          git add *.txt --intent-to-add
-          git update-index --skip-worktree --assume-unchanged *.txt
-
       - name: Update package
         id: update-package
         run: |
           set -euxo pipefail
           cachix watch-exec wahoo-wahoo-man -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --version=branch --commit --build
-
-      - run: |
-          rm hash.txt
-          rm url.txt
-          git rm *.txt
 
       - name: Create Pull Request
         id: cpr

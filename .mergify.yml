@@ -8,6 +8,7 @@ pull_request_rules:
       - or:
           - label=dependencies
           - label=update
+      - check-success=Build
     actions:
       merge:
         method: merge

@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  fetchurl,
   fetchpatch,
   autoPatchelfHook,
   python3,
@@ -14,27 +15,34 @@
   SDL2,
   libGL,
   hexdump,
-  sm64baserom,
   region ? "us",
+  runCommand,
   zlib,
   _60fps ? true,
   moveset ? true,
   nonstop ? true,
 }: let
-  baseRom = (sm64baserom.override {inherit region;}).romPath;
+  file = fetchurl {
+    url = "https://github.com/Revolution641/rom-archive/raw/3ed88d7be055672f4a67179b23c51c7d0ac799de/Super%20Mario%2064%20(USA).z64";
+    hash = "sha256-F84Hc0PGEz+Mny1tbZpKtiyM0qpXxArqH0kLTIuyHZE=";
+  };
+  result = runCommand "baserom-${region}-safety-dir" {} ''
+    mkdir $out
+    cp ${file} $out/baserom.${region}.z64
+  '';
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "sm64ex-ap";
     rev' = "9289288f241cd03c3287306c715eca0755333075";
     version = "v1.0.0+${finalAttrs.rev'}";
 
-    # baseRom = "${result.outPath}/baserom.${region}.z64";
+    baseRom = "${result.outPath}/baserom.${region}.z64";
 
     src = fetchFromGitHub {
       owner = "N00byKing";
       repo = "sm64ex";
       rev = finalAttrs.rev';
-      hash = "sha256-TugwN1aFWB1p0cDzKJlP3hng90zty0cJ03teHV7j1Jc=";
+      hash = "sha256-PnZltwX02buaum+PDLxnToOZD6QQtlpJOTHbOVBYC8k=";
       # hash = lib.fakeHash;
 
       # leaveDotGit = true;
@@ -110,7 +118,7 @@ in
 
     preBuild = ''
       patchShebangs extract_assets.py
-      ln -s ${baseRom} ./baserom.${region}.z64
+      ln -s ${finalAttrs.baseRom} ./baserom.${region}.z64
     '';
 
     installPhase =
