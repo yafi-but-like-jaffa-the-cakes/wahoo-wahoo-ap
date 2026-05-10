@@ -41,8 +41,8 @@ jobs:
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
       - run: |
-          printf "${{ secrets.URL }}" > url.txt
-          printf "${{ secrets.HASH }}" > hash.txt
+          echo -n "${{ secrets.URL }}" > url.txt
+          echo -n "${{ secrets.HASH }}" > hash.txt
 
       - name: Update package
         id: update-package
