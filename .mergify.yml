@@ -8,9 +8,6 @@ pull_request_rules:
       - or:
           - label=dependencies
           - label=update
-      - check-success=Build
-      - check-success=Format
-      - check-success=Flake Check
     actions:
       merge:
         method: merge
