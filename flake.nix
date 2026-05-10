@@ -36,4 +36,13 @@
         pkgs.alejandra
     );
   };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://wahoo-wahoo-man.cachix.org/"
+    ];
+    extra-trusted-public-keys = [
+      "wahoo-wahoo-man.cachix.org-1:4pFCpQO1n3M4DCyiPaGA4sPhPvMoCVh8szCTdiNcvzI="
+    ];
+  };
 }

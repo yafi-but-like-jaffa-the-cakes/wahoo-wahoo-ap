@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: ["*"]
     paths:
-      - .github/workflows/update-all.yml
+      - .github/workflows/update.yml
 
 jobs:
   update:
