@@ -36,8 +36,19 @@ jobs:
           mkdir -p ~/.config/nixpkgs
           echo "{ allowUnfree = true; }" > ~/.config/nixpkgs/config.nix
 
+      - run: |
+          echo -n "${{ secrets.URL }}" > url.txt
+          echo -n "${{ secrets.HASH }}" > hash.txt
+          git add *.txt --intent-to-add
+          git update-index --skip-worktree --assume-unchanged *.txt
+
       - name: build-package
         id: build-package
         run: |
           set -euxo pipefail
           nix build .#sm64ex-ap -L --no-link --print-out-paths | cachix push wahoo-wahoo-man
+
+      - run: |
+          rm hash.txt
+          rm url.txt
+          git rm *.txt
