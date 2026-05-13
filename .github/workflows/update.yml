@@ -47,7 +47,7 @@ jobs:
         id: update-package
         run: |
           set -euxo pipefail
-          cachix watch-exec wahoo-wahoo-man -- nix run nixpkgs#nix-update -- sm64ex-ap --flake --version=branch --commit --build
+          nix run nixpkgs#nix-update -- sm64ex-ap --flake --version=branch --commit --build
 
       - name: Create Pull Request
         id: cpr
