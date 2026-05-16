@@ -20,10 +20,12 @@
       };
       overlay = self.overlays.default pkgs pkgs;
     in
-      overlay;
+      overlay // {default = pkgs.callPackage ./package.nix {};};
+  in let
+    packages' = forAllSystems pkgsFor;
   in {
     inherit (import ./flake.nix) nixConfig;
-    packages = forAllSystems pkgsFor;
+    packages = packages';
 
     overlays.default = import ./overlay.nix;
 
