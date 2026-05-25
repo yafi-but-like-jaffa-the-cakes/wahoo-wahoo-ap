@@ -1,7 +1,7 @@
 {
   description = "It's a me, wahoo man mario";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs = {
     self,
