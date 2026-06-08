@@ -42,7 +42,7 @@ in
       owner = "N00byKing";
       repo = "sm64ex";
       rev = finalAttrs.rev';
-      hash = "sha256-QH2aqiJ6PV3E6eCacmFsUoj3kYNI8SQ2pL1Ron45Q8Q=";
+      hash = "sha256-lhI1zNvBDHlSD0RYqoGj27LRTvFBHajtz3TojjX7jgg=";
       # hash = lib.fakeHash;
 
       # leaveDotGit = true;
