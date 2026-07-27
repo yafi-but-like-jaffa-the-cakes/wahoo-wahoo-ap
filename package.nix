@@ -33,7 +33,7 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "sm64ex-ap";
-    rev' = "9289288f241cd03c3287306c715eca0755333075";
+    rev' = "d73bce2e046a87d3ce1e4ae5fb1979fb290cc684";
     version = "v1.0.0+${finalAttrs.rev'}";
 
     baseRom = "${result.outPath}/baserom.${region}.z64";
@@ -42,7 +42,7 @@ in
       owner = "N00byKing";
       repo = "sm64ex";
       rev = finalAttrs.rev';
-      hash = "sha256-AzNarPRRQ3nXP0n7kpYGVP3ykilQ3sUnlVpvo6zZ4zY=";
+      hash = "sha256-9W560iLqCOfkOzVNgYt8URWO7Ai0J9vmIBaYkQ5thac=";
       # hash = lib.fakeHash;
 
       # leaveDotGit = true;
